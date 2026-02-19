@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Green Travelling — Electric Bus Booking (Gorakhpur)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="leaf" aria-hidden></div>
+      <div>
+        <div class="title">Green Travelling</div>
+        <div class="subtitle">Electric Bus Booking — Demo</div>
+      </div>
+    </div>
+
+    <div class="demo-note">Demo only — fares estimated, no real payments</div>
+
+    <!-- Profile Button -->
+    <div class="profile-btn" onclick="openProfile()" title="Open profile">
+      <div class="profile-initial" id="profileInitial">YOU</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="panel">
+      <h3>Search Electric Buses</h3>
+
+      <form id="searchForm" onsubmit="return false">
+        <div>
+          <label for="state">State</label>
+          <select id="state"></select>
+        </div>
+
+        <div style="margin-top:8px">
+          <label for="city">City</label>
+          <select id="city"></select>
+        </div>
+
+        <div style="margin-top:8px">
+          <label for="route">Route</label>
+          <select id="route"></select>
+        </div>
+
+        <div class="row" style="margin-top:8px">
+          <div>
+            <label for="date">Departure Date</label>
+            <input id="date" type="date" />
+          </div>
+          <div>
+            <label for="pax">Passengers</label>
+            <select id="pax"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <button id="searchBtn" class="primary" type="button">Search</button>
+          <button id="locBtn" class="secondary" type="button">Use my location</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="small">Buses near you</div>
+            <div id="nearCount">—</div>
+          </div>
+          <div class="stat">
+            <div class="small">Detected city</div>
+            <div id="detectedCity">—</div>
+          </div>
+        </div>
+      </form>
+
+      <div class="bus-list">
+        <h4>Available buses</h4>
+        <div id="busItems" class="small">Search to view routes</div>
+      </div>
+    </aside>
+
+    <main>
+      <div id="map"></div>
+    </main>
+  </div>
+
+  <!-- Booking modal -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="card">
+      <div class="modal-header">
+        <div>
+          <div id="modalTitle" class="modal-title"></div>
+          <div id="modalSubtitle" class="small"></div>
+        </div>
+        <button onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="small">Route</div>
+        <div id="modalRoute"></div>
+
+        <div class="row" style="margin-top:8px">
+          <div>
+            <div class="small">Departure</div>
+            <div id="modalDep"></div>
+          </div>
+          <div>
+            <div class="small">Fare per seat</div>
+            <div id="modalFare"></div>
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:10px">Select seats:</div>
+        <div id="seatsArea" class="seats"></div>
+
+        <div class="small" style="margin-top:10px">Payment method:</div>
+        <div id="paymentMethods" class="payment-methods">
+          <button data-method="card">Card</button>
+          <button data-method="upi">UPI</button>
+          <button data-method="wallet">Wallet</button>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button id="confirmPay" class="primary" disabled>Confirm Booking</button>
+          <button class="secondary" onclick="closeModal()">Cancel</button>
+        </div>
+
+        <div id="paymentResult" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="modal" aria-hidden="true">
+    <div class="card">
+      <div class="modal-header">
+        <div><strong>Profile Information</strong></div>
+        <button onclick="closeProfile()">✕</button>
+      </div>
+      <div style="margin-top:8px">
+        <label>Name</label>
+        <input type="text" id="profileName" placeholder="Your Name">
+        <label>Email</label>
+        <input type="email" id="profileEmail" placeholder="you@example.com">
+        <label>Phone</label>
+        <input type="tel" id="profilePhone" placeholder="9999999999">
+        <div class="row" style="margin-top:10px">
+          <button class="primary" onclick="saveProfile()">Save</button>
+          <button class="secondary" onclick="clearProfile()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" style="display:none"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
