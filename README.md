@@ -13,5 +13,5 @@ Green Travelling is a web-based platform that promotes eco-friendly and sustaina
 - JavaScript
 
 ## 👨‍💻 Developed By
-- Your Name
-- Team Members# Greentravelling.bit
+- Kritika Gupta
+- Milee Kannaujiya
